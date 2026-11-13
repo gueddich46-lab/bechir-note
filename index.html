@@ -16,11 +16,13 @@
 <div class="sectionHead"><h2>ملاحظاتي المحفوظة <span id="count" style="font-size:14px;color:#948678"></span></h2><input id="search" class="search" placeholder="⌕ ابحث عن ملاحظة..." aria-label="بحث في الملاحظات"></div>
 <section id="cards" class="cards" aria-label="الملاحظات المحفوظة"></section>
 <div class="actions" style="padding:20px 0"><button class="smallbtn" id="restoreButton">↑ استيراد نسخة احتياطية</button><input type="file" accept=".json,application/json" id="restore" class="hidden"></div>
+<section id="shareQR" style="margin:25px auto 8px;max-width:430px;padding:22px;background:#fffefa;border:1px solid #e8ded1;border-radius:22px;text-align:center"><h2 style="margin:0 0 8px;font-size:20px">📱 شارك BECHIR NOTE</h2><p style="color:#82766a;margin:0 0 12px;font-size:14px">امسح الرمز لفتح التطبيق وإنشاء دفتر خاص بك</p><img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=12&data=https%3A%2F%2Fgueddich46-lab.github.io%2Fbechir-note%2F" alt="رمز QR لرابط BECHIR NOTE العام" width="220" height="220" loading="lazy" style="display:block;margin:0 auto 12px;max-width:100%;border-radius:12px"><a href="https://gueddich46-lab.github.io/bechir-note/" target="_blank" rel="noopener" style="display:block;overflow-wrap:anywhere;color:#426d55;font-size:13px">gueddich46-lab.github.io/bechir-note</a><button type="button" class="smallbtn" id="copyShareLink" style="margin-top:12px">نسخ رابط التطبيق</button><p style="color:#82766a;font-size:12px">هذا الرمز يشارك رابط التطبيق فقط، وليس الملاحظات أو كلمة المرور.</p></section>
 <p class="notice">ملاحظاتك مشفّرة محليًا قبل حفظها باستخدام AES-GCM. النسخ الاحتياطية مشفّرة أيضًا. لا تنس كلمة مرورك؛ فقدانها يعني فقدان الوصول إلى الملاحظات.</p>
 <footer class="foot">صُنع بمحبة ❤️ — إبداع وتطوير بشير قديش</footer></main></div>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
+$('copyShareLink').onclick=async()=>{const url='https://gueddich46-lab.github.io/bechir-note/';try{await navigator.clipboard.writeText(url);$('copyShareLink').textContent='✓ تم نسخ الرابط'}catch(e){prompt('انسخ الرابط:',url)}};
 const DB='bechir_note_db',STORE='notes';
 const META='bechir_note_secure_v1';let key=null;let secureMeta=null;
 const encoder=new TextEncoder(),decoder=new TextDecoder();

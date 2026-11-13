@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'android/**'
+      - 'store-launcher.svg'
       - '.github/workflows/android-apk.yml'
 jobs:
   apk:
@@ -25,6 +26,11 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+      - name: Render exact store icon into Android resources
+        run: |
+          python3 -m pip install --user cairosvg
+          mkdir -p android/app/src/main/res/drawable-nodpi
+          python3 -c "import cairosvg; cairosvg.svg2png(url='store-launcher.svg',write_to='android/app/src/main/res/drawable-nodpi/store_launcher.png',output_width=432,output_height=432)"
       - name: Build APK
         run: gradle -p android assembleDebug --no-daemon --stacktrace --console=plain
       - uses: actions/upload-artifact@v4
